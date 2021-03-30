@@ -1,4 +1,5 @@
 import { startOfHour } from "date-fns";
+import AppError from "../errors/AppError";
 import Appointment from "../models/Appointment";
 import AppointmentsRepository from "../repositories/AppointmentsRepository";
 
@@ -15,7 +16,7 @@ class CreateAppointmentService {
    */
   public execute({ provider, date }: RequestDTO): Appointment {
     if (!provider || String(date) === "Invalid Date")
-      throw new Error("Bad Request");
+      throw new AppError("Bad Request", 400);
 
     const appointmentDate = startOfHour(date);
 
@@ -23,7 +24,7 @@ class CreateAppointmentService {
       appointmentDate
     );
     if (findAppointmentInSameDate)
-      throw new Error("This appointment is already booked");
+      throw new AppError("This appointment is already booked", 401);
 
     const appointment = this.appointmentsRepository.create({
       provider,
