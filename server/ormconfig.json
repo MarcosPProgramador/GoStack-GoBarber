@@ -7,7 +7,7 @@
   "database": "postgres",
 
   "migrations": ["./src/database/migrations/**.ts"],
-  "entities": ["./src/database/models/**.ts"],
+  "entities": ["./src/models/**.ts"],
   "cli": {
     "migrationsDir": "./src/database/migrations",
     "entitiesDir": "./src/models"
