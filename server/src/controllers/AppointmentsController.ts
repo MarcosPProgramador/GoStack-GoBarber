@@ -1,38 +1,38 @@
 import { parseISO } from "date-fns";
 import { Request, Response } from "express";
+import { getCustomRepository } from "typeorm";
 import AppointmentsRepository from "../repositories/AppointmentsRepository";
 import CreateAppointmentService from "../services/CreateAppointmentService";
-
-const appointmentsRepository = new AppointmentsRepository();
 
 class AppointmentsController {
   /**
    * index
    */
-  public index(request: Request, response: Response) {
-    const appointments = appointmentsRepository.all();
+  async index(request: Request, response: Response) {
+    const appointmentsRepository = getCustomRepository(AppointmentsRepository);
+    const appointments = await appointmentsRepository.find();
 
     return response.status(200).json(appointments);
   }
   /**
    * store
    */
-  public store(request: Request, response: Response) {
+  async store(request: Request, response: Response) {
     try {
-      const { provider, date } = request.body;
+      const { provider_id, date } = request.body;
       const parsedDate = parseISO(date);
 
-      const createAppointmentService = new CreateAppointmentService(
-        appointmentsRepository
-      );
-      const appointment = createAppointmentService.execute({
-        provider,
+      const createAppointmentService = new CreateAppointmentService();
+      const appointment = await createAppointmentService.execute({
+        provider_id,
         date: parsedDate,
       });
 
       return response.status(200).json(appointment);
-    } catch (error) {
-      return response.status(400).json({ message: error.message });
+    } catch (err) {
+      return response
+        .status(err.statusCode || 400)
+        .json({ message: err.message });
     }
   }
 }
