@@ -18,7 +18,6 @@ export function ensureAuthenticated(
 
   const [, token] = authorization.split(" ");
 
-  if (!token) throw new AppError("JWT token is missing.", 401);
   const { secret } = authConfig.jwt;
   try {
     const decoded = verify(token, secret);

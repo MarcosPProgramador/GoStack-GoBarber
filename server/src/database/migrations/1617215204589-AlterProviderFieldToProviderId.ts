@@ -5,7 +5,7 @@ import {
   TableForeignKey,
 } from "typeorm";
 
-export class AlterProviderFieldToProviderId1617215204589
+export default class AlterProviderFieldToProviderId1617215204589
   implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.dropColumn("appointments", "provider");

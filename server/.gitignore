@@ -1,0 +1,10 @@
+/node_modules
+/build
+/dist
+
+.env
+**.sql
+**.sqlite
+
+tmp/*
+!tmp/.gitkeep

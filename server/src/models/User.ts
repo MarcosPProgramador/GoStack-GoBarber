@@ -20,6 +20,9 @@ class User {
   @Column()
   password: string;
 
+  @Column()
+  avatar: string;
+
   @UpdateDateColumn()
   updated_at: Date;
 

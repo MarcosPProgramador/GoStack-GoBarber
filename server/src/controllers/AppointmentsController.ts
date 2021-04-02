@@ -18,22 +18,16 @@ class AppointmentsController {
    * store
    */
   async store(request: Request, response: Response) {
-    try {
-      const { provider_id, date } = request.body;
-      const parsedDate = parseISO(date);
+    const { provider_id, date } = request.body;
+    const parsedDate = parseISO(date);
 
-      const createAppointmentService = new CreateAppointmentService();
-      const appointment = await createAppointmentService.execute({
-        provider_id,
-        date: parsedDate,
-      });
+    const createAppointmentService = new CreateAppointmentService();
+    const appointment = await createAppointmentService.execute({
+      provider_id,
+      date: parsedDate,
+    });
 
-      return response.status(200).json(appointment);
-    } catch (err) {
-      return response
-        .status(err.statusCode || 400)
-        .json({ message: err.message });
-    }
+    return response.status(200).json(appointment);
   }
 }
 export default AppointmentsController;
