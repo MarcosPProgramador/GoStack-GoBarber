@@ -1,47 +1,43 @@
-import {
-  MigrationInterface,
-  QueryRunner,
-  TableColumn,
-  TableForeignKey,
-} from "typeorm";
 
-export default class AlterProviderFieldToProviderId1617215204589
-  implements MigrationInterface {
+
+import { MigrationInterface, QueryRunner, TableColumn, TableForeignKey } from 'typeorm'
+
+export default class AlterProviderFieldToProviderId1617215204589 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropColumn("appointments", "provider");
+    await queryRunner.dropColumn('appointments', 'provider')
 
     await queryRunner.addColumn(
-      "appointments",
+      'appointments',
       new TableColumn({
-        name: "provider_id",
-        type: "uuid",
+        name: 'provider_id',
+        type: 'uuid',
         isNullable: true,
-      })
-    );
+      }),
+    )
     await queryRunner.createForeignKey(
-      "appointments",
+      'appointments',
       new TableForeignKey({
-        name: "FKProvider",
-        referencedTableName: "users",
-        referencedColumnNames: ["id"],
-        columnNames: ["provider_id"],
-        onDelete: "SET NULL",
-        onUpdate: "CASCADE",
-      })
-    );
+        name: 'FKProvider',
+        referencedTableName: 'users',
+        referencedColumnNames: ['id'],
+        columnNames: ['provider_id'],
+        onDelete: 'SET NULL',
+        onUpdate: 'CASCADE',
+      }),
+    )
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropForeignKey("appointments", "FKProvider");
+    await queryRunner.dropForeignKey('appointments', 'FKProvider')
 
-    await queryRunner.dropColumn("appointments", "provider_id");
+    await queryRunner.dropColumn('appointments', 'provider_id')
 
     await queryRunner.addColumn(
-      "appointments",
+      'appointments',
       new TableColumn({
-        name: "provider",
-        type: "varchar",
-      })
-    );
+        name: 'provider',
+        type: 'varchar',
+      }),
+    )
   }
 }
