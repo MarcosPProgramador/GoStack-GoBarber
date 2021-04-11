@@ -10,6 +10,8 @@ export default {
     medium: '#28262E',
     background: '#312E38',
     inputs: '#232129',
-    text: '#f0f8ff',
+    text: '#EEEFF1',
+    error: '#c53030',
+    success: '#1DC970'
   }
 } as DefaultTheme

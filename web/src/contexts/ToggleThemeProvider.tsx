@@ -10,7 +10,9 @@ interface IToggleThemeContext<T = any> {
 
 export const ToggleThemeContext = createContext<IToggleThemeContext<DefaultTheme>>({} as IToggleThemeContext)
 const ToggleThemeProvider: React.FC = ({ children }): JSX.Element => {
+  
   const [theme, setTheme] = usePersistedState('theme', dark)
+
   return (
     <ToggleThemeContext.Provider value={{ theme, setTheme }}>
       {children}
