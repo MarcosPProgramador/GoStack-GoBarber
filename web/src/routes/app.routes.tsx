@@ -1,23 +1,21 @@
-import React, { useContext } from 'react'
-import { BrowserRouter, Route, Switch } from 'react-router-dom'
-import { ThemeProvider } from 'styled-components'
-import { ToggleThemeContext } from '../contexts/ToggleThemeProvider'
-import Home from '../pages/Home'
+import React from 'react'
+import { BrowserRouter, Switch } from 'react-router-dom'
+import Dashboard from '../pages/Dashboard'
 import SignIn from '../pages/SignIn'
-import GlobalStyle from '../styles/globalStyle'
+import SignUp from '../pages/SignUp'
+import Route from './redirect.routes'
 
 const Routes = () => {
-  const { theme } = useContext(ToggleThemeContext)
   return (
-    <ThemeProvider theme={theme}>
-      <GlobalStyle />
+    <>
       <BrowserRouter>
         <Switch>
-          <Route path={'/'} exact component={Home} />
-          <Route path={'/signin'} component={SignIn} />
+          <Route path={'/'} exact component={SignIn} />
+          <Route path={'/signup'} component={SignUp} />
+          <Route path={'/dashboard'} component={Dashboard} isPrivate />
         </Switch>
       </BrowserRouter>
-    </ThemeProvider>
+    </>
   )
 }
 
