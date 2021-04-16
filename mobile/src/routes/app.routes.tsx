@@ -12,9 +12,9 @@ const AppRoutes: React.FC = () => {
       <Stack.Navigator screenOptions={{
         headerShown: false,
         cardStyle: { backgroundColor: '#312e38' }
-      }}>
-        <Stack.Screen name="SignUp" component={SignUp} />
+      }} initialRouteName="SignUp">
         <Stack.Screen name="SignIn" component={SignIn} />
+        <Stack.Screen name="SignUp" component={SignUp} />
       </Stack.Navigator>
     </NavigationContainer>
 
