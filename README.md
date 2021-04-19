@@ -20,7 +20,7 @@
         -  **_yarn_** dev
             -  access **http://localhost:3333/**
 
-### **🧪 tests**
+### **🌌 tests**
    -  **_yarn_** test
 
 ### **🌌 preview**
