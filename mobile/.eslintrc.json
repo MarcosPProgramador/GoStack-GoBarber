@@ -27,6 +27,7 @@
     "prettier"
   ],
   "rules": {
+    "@typescript-eslint/ban-types": "warn",
     "global-require": "off",
     "react/prop-types": "off",
     "no-param-reassign": "off",
