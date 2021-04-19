@@ -9,6 +9,7 @@ import * as Yup from 'yup';
 import logo from '../../assets/logo.png';
 import Button from '../../components/Button';
 import Input from '../../components/Input';
+import useAuth from '../../hooks/useAuth';
 import getValidationErrors from '../../utils/getValidationErrors';
 import {
   Container,
@@ -25,39 +26,48 @@ interface SignInFormData {
 }
 const SignIn: React.FC = () => {
   const navigation = useNavigation();
+  const { signIn } = useAuth();
 
   const formRef = useRef<FormHandles>(null);
   const inputPasswordRef = useRef<TextInput>(null);
 
-  const handleSubmit = useCallback(async (data: SignInFormData) => {
-    try {
-      formRef.current?.setErrors({});
-      const schema = Yup.object().shape({
-        email: Yup.string()
-          .required('E-mail obrigatório!')
-          .email('Este e-mail é inválido.')
-          .max(50, 'O mínimo de caracteres é 50'),
-        password: Yup.string()
-          .min(8, 'O mínimo de caracteres é 8')
-          .max(60, 'O mínimo de caracteres é 60'),
-      });
+  const handleSubmit = useCallback(
+    async (data: SignInFormData) => {
+      try {
+        formRef.current?.setErrors({});
+        const schema = Yup.object().shape({
+          email: Yup.string()
+            .required('E-mail obrigatório!')
+            .email('Este e-mail é inválido.')
+            .max(50, 'O mínimo de caracteres é 50'),
+          password: Yup.string()
+            .min(8, 'O mínimo de caracteres é 8')
+            .max(60, 'O mínimo de caracteres é 60'),
+        });
 
-      await schema.validate(data, {
-        abortEarly: false,
-      });
+        await schema.validate(data, {
+          abortEarly: false,
+        });
 
-      Alert.alert('Sucesso ao realizar login', 'Você agora tem acesso a plataforma!');
-      // navigation.navigate('Dashboard');
-    } catch (err) {
-      if (err instanceof Yup.ValidationError) {
-        const errors = getValidationErrors(err);
+        await signIn({
+          email: data.email,
+          password: data.password,
+        });
 
-        formRef.current?.setErrors(errors);
-        return;
+        Alert.alert('Sucesso ao realizar login', 'Você agora tem acesso a plataforma!');
+        // navigation.navigate('Dashboard');
+      } catch (err) {
+        if (err instanceof Yup.ValidationError) {
+          const errors = getValidationErrors(err);
+
+          formRef.current?.setErrors(errors);
+          return;
+        }
+        Alert.alert('Erro no logon', 'Ocorreu um erro ao realizar o logon.');
       }
-      Alert.alert('Erro no logon', 'Ocorreu um erro ao realizar o logon.');
-    }
-  }, []);
+    },
+    [signIn]
+  );
 
   return (
     <>
