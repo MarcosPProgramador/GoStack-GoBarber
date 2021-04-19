@@ -1,10 +1,10 @@
 import React from 'react';
-import { ButtonProps } from 'react-native';
+import { ButtonProps as ReactNativeButtonProps } from 'react-native';
 import { Container, ButtonText } from './styles';
 
-const Button: React.FC<ButtonProps> = ({ children }) => {
+const Button: React.FC<ReactNativeButtonProps> = ({ children, onPress, ...rest }) => {
   return (
-    <Container>
+    <Container onPress={onPress} {...rest}>
       <ButtonText>{children}</ButtonText>
     </Container>
   );
