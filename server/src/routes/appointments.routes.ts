@@ -1,3 +1,5 @@
+ 
+
 import { Router } from 'express'
 import AppointmentsController from '../controllers/AppointmentsController'
 import { ensureAuthenticated } from '../middlewares/ensureAuthenticated'

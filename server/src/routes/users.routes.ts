@@ -1,3 +1,5 @@
+
+
 import { Router } from 'express'
 import multer from 'multer'
 import uploadConfig from '../config/upload'
@@ -10,11 +12,6 @@ const usersController = new UsersController()
 const upload = multer(uploadConfig)
 
 usersRouter.post('/', usersController.store)
-usersRouter.patch(
-	'/avatar',
-	ensureAuthenticated,
-	upload.single('avatar'),
-	usersController.patch,
-)
+usersRouter.patch('/avatar', ensureAuthenticated, upload.single('avatar'), usersController.patch)
 
 export default usersRouter
