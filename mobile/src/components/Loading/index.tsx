@@ -1,7 +1,12 @@
 import React from 'react';
-import { Text } from 'react-native';
+import { ActivityIndicator, View } from 'react-native';
 
 const Loading: React.FC = () => {
-  return <Text>Loading...</Text>;
+  return (
+    <View
+      style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: '#fff' }}>
+      <ActivityIndicator size="large" color="#999" />
+    </View>
+  );
 };
 export default Loading;
