@@ -2,6 +2,7 @@ import authConfig from '@config/auth'
 import AppError from '@shared/errors/AppError'
 import { compare } from 'bcryptjs'
 import { sign } from 'jsonwebtoken'
+import { inject, injectable } from 'tsyringe'
 import User from '../infra/typeorm/entities/User'
 import IUsersRepository from '../repositories/IUsersRepository'
 
@@ -27,8 +28,12 @@ interface Response {
  * [x] Dependency Inversion Principle
  *
  */
+@injectable()
 class AuthenticateUserService {
-  constructor(private usersRepository: IUsersRepository) { }
+  constructor(
+    @inject('UsersRepository')
+    private usersRepository: IUsersRepository
+  ) { }
 
   /**
    * execute

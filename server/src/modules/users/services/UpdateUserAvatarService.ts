@@ -2,6 +2,7 @@ import uploadConfig from '@config/upload'
 import AppError from '@shared/errors/AppError'
 import fs from 'fs'
 import path from 'path'
+import { inject, injectable } from 'tsyringe'
 import User from '../infra/typeorm/entities/User'
 import IUsersRepository from '../repositories/IUsersRepository'
 
@@ -21,8 +22,12 @@ interface RequestDTO {
  * [x] Dependency Inversion Principle
  *
  */
+@injectable()
 class UpdateUserAvatarService {
-  constructor(private usersRepository: IUsersRepository) { }
+  constructor(
+    @inject('UsersRepository')
+    private usersRepository: IUsersRepository
+  ) { }
   /**
    * execute
    */
@@ -35,7 +40,9 @@ class UpdateUserAvatarService {
     if (!user) throw new AppError('Only autheticated users can change avatar.', 401)
 
     if (user.avatar) {
-      const userAvatarFilePath = path.join(uploadConfig.directory, user.avatar)
+      const { directory } = uploadConfig
+      
+      const userAvatarFilePath = path.join(directory, user.avatar)
       try {
         const userAvatarFileExists = await fs.promises.stat(userAvatarFilePath)
         if (userAvatarFileExists) {
