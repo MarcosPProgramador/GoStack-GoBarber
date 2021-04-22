@@ -1,5 +1,3 @@
-
-
 import crypto from 'crypto'
 import multer from 'multer'
 import path from 'path'
@@ -11,8 +9,10 @@ export default {
   storage: multer.diskStorage({
     destination: tmpFolder,
     filename: (request, file, callback) => {
-      const fileHash = crypto.randomBytes(10).toString('hex')
-      const fileName = `${fileHash}-${file.originalname}`
+      const hash = crypto.randomBytes(10).toString('hex')
+      const originalName = file.originalname.replace(' ', '-')
+      
+      const fileName = `${hash}-${originalName}`
 
       callback(null, fileName)
     },
