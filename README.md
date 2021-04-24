@@ -5,22 +5,33 @@
 
 ## **💻 if you are going to start the project, do the following:**
 
--  **cd** web
+-  **cd** server
     -  **install the project dependencies:**
         -  **_yarn_**
-    -  **start the server:**
-        -  **_yarn_** start
--  **cd** ../server
-
-    -  **install the project dependencies:**
-        -  **_yarn_**
+    -  **initialize a new container 🐟 docker:**    
+        -  _docker run --name **GoBarber** -e POSTGRES_PASSWORD=**GoBarber** -p 5432:5432 -d postgres_
+        -  **create a new 🎲 database:**    
+            -  **CREATE DATABASE** GoBarber;
+            -  **USE** GoBarber;
     -  **run all migrations:**
         -  **_yarn_** typeorm migration:**run**
-    -  **start the server:**
+    -  **start:**
         -  **_yarn_** dev
             -  access **http://localhost:3333/**
+-  **cd** ../web
+    -  **install the project dependencies:**
+        -  **_yarn_**
+    -  **start:**
+        -  **_yarn_** start
+-  **cd** ../mobile
+    -  **install the project dependencies:**
+        -  **_yarn_**
+    -  **start:**
+        -  **_yarn_** web
+        -  **_yarn_** android
+        -  **_yarn_** ios
 
-### **🌌 tests**
+### **🧪 tests**
    -  **_yarn_** test
 
 ### **🌌 preview**
@@ -30,19 +41,22 @@
 
 ### **🔧 technologies used**
 
--  Node JS
--  React JS
--  TypeORM
+-  node js
+-  react native
+-  react js
+-  expo
+-  typeorm
 -  cors
 -  Jest
--  bscrypt
+-  tsyringe
+-  bcrypt
 -  Jwt
--  Axios
--  Api-Rest
+-  axios
+-  api rest
 -  postgres
--  TypeScript
--  ESLint
--  Prettier
+-  typescript
+-  eslint
+-  prettier
 -  git
 -  yarn
 
