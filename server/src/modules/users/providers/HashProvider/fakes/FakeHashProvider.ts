@@ -1,6 +1,6 @@
 import IHashProvider from "../models/IHashProvider";
 
-class FakeBCryptHashProvider implements IHashProvider {
+class FakeHashProvider implements IHashProvider {
   async compareHash(payload: string, hashed: string): Promise<boolean> {
     return payload === hashed
   }
@@ -10,4 +10,4 @@ class FakeBCryptHashProvider implements IHashProvider {
 
 }
 
-export default FakeBCryptHashProvider
+export default FakeHashProvider
