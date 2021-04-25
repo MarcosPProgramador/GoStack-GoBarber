@@ -32,9 +32,6 @@ class CreateAppointmentService {
    */
 
   async execute({ provider_id, date }: RequestDTO): Promise<Appointment> {
-    if (!provider_id || String(date) === 'Invalid Date') throw new AppError('Bad Request', 400)
-
-
     const appointmentDate = startOfHour(date)
 
     const findAppointmentInSameDate = await this.appointmentsRepository.findByDate(appointmentDate)
