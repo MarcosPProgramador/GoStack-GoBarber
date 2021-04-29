@@ -1,7 +1,7 @@
 import AppError from '@shared/errors/AppError'
-import { hash } from 'bcryptjs'
 import { inject, injectable } from 'tsyringe'
 import User from '../infra/typeorm/entities/User'
+import IHashProvider from '../providers/HashProvider/models/IHashProvider'
 import IUsersRepository from '../repositories/IUsersRepository'
 
 interface IRequestDTO {
@@ -25,7 +25,10 @@ interface IRequestDTO {
 class CreateUserService {
   constructor(
     @inject('UsersRepository')
-    private usersRepository: IUsersRepository
+    private usersRepository: IUsersRepository,
+
+    @inject('HashProvider')
+    private hashProvider: IHashProvider
   ) { }
 
 
@@ -36,7 +39,7 @@ class CreateUserService {
 
     if (checkUserExists) throw new AppError('User already exists', 409)
 
-    const hashedPassword = await hash(password, 8)
+    const hashedPassword = await this.hashProvider.generateHash(password)
 
     const user = await this.usersRepository.create({
       name,
