@@ -1,4 +1,5 @@
 import uploadConfig from '@config/upload'
+import IStorageProvider from '@shared/container/providers/StorageProvider/models/IStorageProvider'
 import AppError from '@shared/errors/AppError'
 import fs from 'fs'
 import path from 'path'
@@ -17,7 +18,7 @@ interface RequestDTO {
  *
  * [x] Single Responsability Principle
  * [ ] Open-Closed Principle
- * [ ] Liskov Substitution Principle
+ * [x] Liskov Substitution Principle
  * [ ] Interface Segregation Principle
  * [x] Dependency Inversion Principle
  *
@@ -26,37 +27,27 @@ interface RequestDTO {
 class UpdateUserAvatarService {
   constructor(
     @inject('UsersRepository')
-    private usersRepository: IUsersRepository
+    private usersRepository: IUsersRepository,
+
+    @inject('StorageProvider')
+    private storageProvider: IStorageProvider
   ) { }
   /**
    * execute
    */
   public async execute({ user_id, avatarFileName }: RequestDTO): Promise<User> {
-
-
     const user = await this.usersRepository.findById(user_id)
-
 
     if (!user) throw new AppError('Only autheticated users can change avatar.', 401)
 
     if (user.avatar) {
-      const { directory } = uploadConfig
-      
-      const userAvatarFilePath = path.join(directory, user.avatar)
-      try {
-        const userAvatarFileExists = await fs.promises.stat(userAvatarFilePath)
-        if (userAvatarFileExists) {
-          await fs.promises.unlink(userAvatarFilePath)
-        }
-      } catch (err) {
-        console.log(err);
-
-      }
+      await this.storageProvider.deleteFile(user.avatar)
     }
-    user.avatar = avatarFileName
+    const filename = await this.storageProvider.saveFile(avatarFileName)
+
+    user.avatar = filename
 
     await this.usersRepository.save(user)
-
     return user
   }
 }
