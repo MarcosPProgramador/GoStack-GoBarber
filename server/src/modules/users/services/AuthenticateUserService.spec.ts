@@ -32,18 +32,20 @@ describe('AuthenticateUser', () => {
 
     const authenticateUser = new AuthenticateUserService(fakeUsersRepository, fakeHashProvider)
 
-    const responsePromise = authenticateUser.execute({
+
+    await expect(authenticateUser.execute({
       email: 'johndoe@example.com',
       password: '123456'
-    })
-
-    expect(responsePromise).rejects.toBeInstanceOf(AppError)
+    })).rejects.toBeInstanceOf(AppError)
   })
   it('should not be able to authenticate with an invalid user password', async () => {
     const fakeUsersRepository = new FakeUsersRepository()
     const fakeHashProvider = new FakeHashProvider()
 
-    const createUser = new CreateUserService(fakeUsersRepository, fakeHashProvider)
+    const createUser = new CreateUserService(
+      fakeUsersRepository,
+      fakeHashProvider
+    )
 
     await createUser.execute({
       name: 'John Doe',
@@ -51,13 +53,17 @@ describe('AuthenticateUser', () => {
       password: '1234567'
     })
 
-    const authenticateUser = new AuthenticateUserService(fakeUsersRepository, fakeHashProvider)
+    const authenticateUser = new AuthenticateUserService(
+      fakeUsersRepository,
+      fakeHashProvider
+    )
 
-    const responsePromise = authenticateUser.execute({
-      email: 'johndoe@example.com',
-      password: '123456'
-    })
 
-    expect(responsePromise).rejects.toBeInstanceOf(AppError)
+    await expect(
+      authenticateUser.execute({
+        email: 'johndoe@example.com',
+        password: '123456'
+      })
+    ).rejects.toBeInstanceOf(AppError)
   })
 })
