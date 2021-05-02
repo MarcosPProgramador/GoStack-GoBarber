@@ -35,12 +35,13 @@ describe('UpdateUserAvatar', () => {
       fakeStorageProvider
     )
 
-    const userPromise = updateUserAvatar.execute({
-      user_id: 'non-existent-user',
-      avatarFileName: 'avatar.jpg'
-    })
 
-    expect(userPromise).rejects.toBeInstanceOf(AppError)
+    await expect(
+      updateUserAvatar.execute({
+        user_id: 'non-existent-user',
+        avatarFileName: 'avatar.jpg'
+      })
+    ).rejects.toBeInstanceOf(AppError)
 
   })
   it('should delete old avatar when updating new one', async () => {
