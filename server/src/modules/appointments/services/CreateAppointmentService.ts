@@ -14,7 +14,7 @@ interface RequestDTO {
  *
  * [x] Single Responsability Principle
  * [ ] Open-Closed Principle
- * [ ] Liskov Substitution Principle
+ * [x] Liskov Substitution Principle
  * [ ] Interface Segregation Principle
  * [x] Dependency Inversion Principle
  *
