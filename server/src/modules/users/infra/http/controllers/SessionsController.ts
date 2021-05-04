@@ -2,7 +2,7 @@ import AuthenticateUserService from "@modules/users/services/AuthenticateUserSer
 import { Request, Response } from "express"
 import { container } from "tsyringe"
 
-class SessionsController {
+export default class SessionsController {
   async authenticate(request: Request, response: Response) {
     const { email, password } = request.body
     const authenticateUser = container.resolve(AuthenticateUserService)
@@ -23,4 +23,3 @@ class SessionsController {
     return response.status(200).json({ user: userWithoutPassword, token })
   }
 }
-export default SessionsController
