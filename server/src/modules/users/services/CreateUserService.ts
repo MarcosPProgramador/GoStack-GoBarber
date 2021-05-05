@@ -33,8 +33,6 @@ class CreateUserService {
 
 
   async execute({ name, email, password }: IRequestDTO): Promise<User> {
-
-
     const checkUserExists = await this.usersRepository.findByEmail(email)
 
     if (checkUserExists) throw new AppError('User already exists', 409)
@@ -46,7 +44,6 @@ class CreateUserService {
       email,
       password: hashedPassword,
     })
-
 
     return user
   }
