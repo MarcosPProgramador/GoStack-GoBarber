@@ -1,30 +1,50 @@
 import IMailProvider from '@shared/container/providers/MailProvider/models/IMailProvider'
 import AppError from '@shared/errors/AppError'
+import path from 'path'
 import { inject, injectable } from 'tsyringe'
-import User from '../infra/typeorm/entities/User'
 import IUsersRepository from '../repositories/IUsersRepository'
+import IUserTokensRepository from '../repositories/IUserTokensRepository'
 
 
 interface IRequest {
   email: string
 }
-injectable()
+@injectable()
 class SendForgotPasswordEmailService {
   constructor(
     @inject('UsersRepository')
     private usersRepository: IUsersRepository,
 
     @inject('MailProvider')
-    private mailProvider: IMailProvider
-  ) {
+    private mailProvider: IMailProvider,
 
-  }
+    @inject('UserTokensRepository')
+    private userTokensRepository: IUserTokensRepository
+  ) { }
   async execute({ email }: IRequest): Promise<void> {
-    const checkUserExists = await this.usersRepository.findByEmail(email)
+    const user = await this.usersRepository.findByEmail(email)
 
-    if (!checkUserExists) throw new AppError('User does not exists.')
+    if (!user) throw new AppError('User does not exists.', 409)
 
-    this.mailProvider.sendMail(email, 'Pedido de recuperação de senha recebido com sucesso.')
+    const { token } = await this.userTokensRepository.generate(user.id)
+
+    const forgotPasswordTemplatePath = path.resolve(__dirname, '..', 'views', 'forgotPasswordEmailView.hbs')
+
+    await this.mailProvider.sendMail({
+      to: {
+        name: user.name,
+        address: user.email,
+      },
+      subject: 'Recuperação de senha.',
+      templateData: {
+        file: forgotPasswordTemplatePath,
+        variables: {
+          name: user.name,
+          link: `http://localhost:3000/reset_password?token=${token}`
+        }
+      }
+    })
+
 
   }
 }
