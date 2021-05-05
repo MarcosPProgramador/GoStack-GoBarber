@@ -7,12 +7,12 @@ import IHashProvider from '../providers/HashProvider/models/IHashProvider'
 import IUsersRepository from '../repositories/IUsersRepository'
 
 
-interface RequestDTO {
+interface IRequest {
   email: string
   password: string
 }
 
-interface Response {
+interface IResponse {
   user: User
   token: string
 }
@@ -23,7 +23,7 @@ interface Response {
  *
  * [x] Single Responsability Principle
  * [ ] Open-Closed Principle
- * [ ] Liskov Substitution Principle
+ * [x] Liskov Substitution Principle
  * [ ] Interface Segregation Principle
  * [x] Dependency Inversion Principle
  *
@@ -41,9 +41,7 @@ class AuthenticateUserService {
   /**
    * execute
    */
-  async execute({ email, password }: RequestDTO): Promise<Response> {
-
-
+  async execute({ email, password }: IRequest): Promise<IResponse> {
     const user = await this.usersRepository.findByEmail(email)
 
     if (!user) throw new AppError('Incorrect email/password combination.', 401)
