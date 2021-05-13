@@ -16,6 +16,7 @@
         "shared/*"
       ]
     },
+    "allowJs": true,
     "esModuleInterop": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
