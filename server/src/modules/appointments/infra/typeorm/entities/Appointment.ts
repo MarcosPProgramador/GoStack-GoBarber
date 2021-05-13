@@ -20,7 +20,7 @@ class Appointment {
   @JoinColumn({ name: 'user_id' })
   user: User
 
-  @Column('timestamp with time zone')
+  @Column('timestamp')
   date: Date
 
   @CreateDateColumn()
