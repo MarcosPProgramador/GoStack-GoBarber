@@ -6,7 +6,7 @@
     "port": 5432,
     "username": "postgres",
     "password": "GoBarber",
-    "database": "postgres",
+    "database": "GoBarber",
     "entities": [
       "./src/modules/**/infra/typeorm/entities/**.ts"
     ],
