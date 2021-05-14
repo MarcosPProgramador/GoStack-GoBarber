@@ -1,5 +1,6 @@
 import ShowProfileService from "@modules/users/services/ShowProfileService";
 import UpdateProfileService from "@modules/users/services/UpdateProfileService";
+import { classToClass } from "class-transformer";
 import { Request, Response } from "express";
 import { container } from "tsyringe";
 
@@ -37,11 +38,7 @@ export default class ProfileController {
       old_password,
       password
     })
-    const updatedUserWithoutPassword = {
-      ...updatedUser,
-      password: undefined
-    }
 
-    return response.status(200).json(updatedUserWithoutPassword)
+    return response.status(200).json(classToClass(updatedUser))
   }
 }
