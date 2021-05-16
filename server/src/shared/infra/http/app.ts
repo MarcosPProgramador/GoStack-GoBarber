@@ -1,4 +1,5 @@
 import 'reflect-metadata'
+import 'dotenv/config'
 import '@shared/container'
 import 'express-async-errors'
 import '../typeorm/connection'
@@ -7,15 +8,19 @@ import uploadConfig from '@config/upload'
 import AppError from '@shared/errors/AppError'
 import cors from 'cors'
 import express, { NextFunction, Request, Response } from 'express'
-import router from './routes/router'
+import router from './routes'
+import { errors } from 'celebrate'
+
 
 
 const app = express()
 
 app.use(cors())
 app.use(express.json())
-app.use('/static', express.static(uploadConfig.directory))
+app.use('/static', express.static(uploadConfig.tmpFolder))
 app.use(router)
+
+app.use(errors())
 
 /**
  * Global Exception Handler
@@ -31,6 +36,7 @@ app.use((err: Error, request: Request, response: Response, _: NextFunction) => {
 
   return response.status(500).json({
     status: 'error',
+    error: err.message,
     message: 'Internal server error',
   })
 })
