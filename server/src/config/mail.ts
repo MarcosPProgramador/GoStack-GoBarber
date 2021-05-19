@@ -1,20 +1,40 @@
+interface IMailDefault {
+  from: {
+    name: string
+    address: string
+  }
+}
 interface IMailConfig {
   driver: 'ethereal' | 'ses'
-  defaults: {
-    from: {
-      name: string
-      address: string
+  config: {
+    ethereal: {
+      defaults: IMailDefault
+    },
+    ses: {
+      defaults: IMailDefault
     }
   }
 }
 export default {
   driver: process.env.MAIL_DRIVER || 'ethereal',
-
-  defaults: {
-    from: {
-      name: 'Equipe GoBarber',
-      address: 'marcosproenca@gmail.com',
+  config: {
+    ethereal: {
+      defaults: {
+        from: {
+          name: 'Equipe Ethereal',
+          address: 'etherealmail@mail.com',
+        }
+      }
+    },
+    ses: {
+      defaults: {
+        from: {
+          name: 'Equipe SES',
+          address: 'sesmail@mail.com',
+        }
+      }
     }
-  }
+  },
+
 } as IMailConfig
 
