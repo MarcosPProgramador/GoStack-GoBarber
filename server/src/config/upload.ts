@@ -10,7 +10,7 @@ interface IUploadsConfig {
   }
   config: {
     disk: {}
-    aws: {
+    s3: {
       bucket: string
     }
   }
@@ -37,7 +37,7 @@ export default {
   },
   config: {
     disk: {},
-    aws: {
+    s3: {
       bucket: 'aws'
     }
   }
