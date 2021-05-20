@@ -5,6 +5,7 @@ import Appointment from '../infra/typeorm/entities/Appointment'
 import IAppointmentsRepository from '../repositories/IAppointmentsRepository'
 import INotificationsRepository from '@modules/notifications/repositories/INotificationsRepository'
 import IUsersRepository from '@modules/users/repositories/IUsersRepository'
+import ICacheProvider from '@shared/container/providers/CacheProvider/models/ICacheProvider'
 
 interface RequestDTO {
   provider_id: string
@@ -33,7 +34,11 @@ class CreateAppointmentService {
     private usersRepository: IUsersRepository,
 
     @inject('NotificationsRepository')
-    private notificationsRepository: INotificationsRepository
+    private notificationsRepository: INotificationsRepository,
+
+    @inject('CacheProvider')
+    private cacheProvider: ICacheProvider,
+
   ) { }
 
   /**
@@ -52,7 +57,10 @@ class CreateAppointmentService {
     if(getHours(appointmentDate) < 8 || getHours(appointmentDate) > 17)
       throw new AppError('you can only create an appointment between at 8am and 5pm.')
 
-    const findAppointmentInSameDate = await this.appointmentsRepository.findByDate(appointmentDate)
+    const findAppointmentInSameDate = await this.appointmentsRepository.findByDate({
+      date: appointmentDate,
+      provider_id
+    })
     if (findAppointmentInSameDate) throw new AppError('this appointment is already booked.')
 
     const appointment = await this.appointmentsRepository.create({
@@ -65,12 +73,15 @@ class CreateAppointmentService {
 
     if(!user) throw new AppError('user does not exist.')
 
+
     const dateFormatted = format(appointmentDate, `dd/MM/yyyy 'às' HH:mm'h'`)
 
     await this.notificationsRepository.create({
       recipient_id: provider_id,
       content: `${user.name} marcou um novo agendamento para o dia ${dateFormatted}`
     })
+
+    this.cacheProvider.invalidate(`provider-appointments:${provider_id}:${format(appointmentDate, 'yyyy-M-d')}`)
 
     return appointment
   }
