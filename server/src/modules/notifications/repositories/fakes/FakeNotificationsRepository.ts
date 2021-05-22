@@ -1,9 +1,8 @@
-import { ObjectID } from 'mongodb'
-
-import {v4 as uuid} from 'uuid'
 import ICreateNotificationDTO from "@modules/notifications/dtos/ICreateNotificationDTO";
 import Notification from "@modules/notifications/infra/typeorm/schemas/Notification";
+import { ObjectID } from 'mongodb';
 import INotificationRepository from "../INotificationsRepository";
+
 
 export default class FakeNotificationsRepository implements INotificationRepository{
   private notifications: Notification[] = []
