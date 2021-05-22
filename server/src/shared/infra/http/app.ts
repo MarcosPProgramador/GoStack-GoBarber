@@ -4,12 +4,15 @@ import '@shared/container'
 import 'express-async-errors'
 import '../typeorm/connection'
 
+import '@shared/container/providers/CacheProvider/fakes/FakeCacheProvider'
+
 import uploadConfig from '@config/upload'
 import AppError from '@shared/errors/AppError'
 import cors from 'cors'
 import express, { NextFunction, Request, Response } from 'express'
 import router from './routes'
 import { errors } from 'celebrate'
+import rateLimiter from './middlewares/rateLimiter'
 
 
 
@@ -17,7 +20,8 @@ const app = express()
 
 app.use(cors())
 app.use(express.json())
-app.use('/static', express.static(uploadConfig.tmpFolder))
+app.use(rateLimiter)
+app.use('/static', express.static(uploadConfig.uploadsFolder))
 app.use(router)
 
 app.use(errors())
