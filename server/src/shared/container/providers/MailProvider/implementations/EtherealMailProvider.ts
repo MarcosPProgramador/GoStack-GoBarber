@@ -1,3 +1,4 @@
+import mailConfig from '@config/mail'
 import { createTestAccount, getTestMessageUrl, Transporter, createTransport } from 'nodemailer'
 import { inject, injectable } from 'tsyringe';
 import IMailTemplateProvider from '../../MailTemplateProvider/models/IMailTemplateProvider';
@@ -26,14 +27,15 @@ export default class EtherealMailProvider implements IMailProvider {
 
   }
   async sendMail({ to, from, subject, templateData }: ISendMailDTO): Promise<void> {
+    const {name,address} = mailConfig.config.ethereal.defaults.from
     const message = await this.transporter.sendMail({
       to: {
         name: to.name,
         address: to.address
       },
       from: {
-        name: from?.name || 'Equipe GoBarber',
-        address: from?.address || 'gobarber@platform.com.br'
+        name: from?.name || name,
+        address: from?.address || address
       },
       subject,
       html: await this.mailTemplateProvider.parse(templateData)
