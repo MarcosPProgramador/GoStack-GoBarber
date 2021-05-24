@@ -1,4 +1,5 @@
 import uploadConfig from '@config/upload'
+import ICacheProvider from '@shared/container/providers/CacheProvider/models/ICacheProvider'
 import IStorageProvider from '@shared/container/providers/StorageProvider/models/IStorageProvider'
 import AppError from '@shared/errors/AppError'
 import fs from 'fs'
@@ -30,14 +31,16 @@ class UpdateUserAvatarService {
     private usersRepository: IUsersRepository,
 
     @inject('StorageProvider')
-    private storageProvider: IStorageProvider
+    private storageProvider: IStorageProvider,
+
+    @inject('CacheProvider')
+    private cacheProvider: ICacheProvider
   ) { }
   /**
    * execute
    */
   public async execute({ user_id, avatarFileName }: RequestDTO): Promise<User> {
     const user = await this.usersRepository.findById(user_id)
-
     if (!user) throw new AppError('Only autheticated users can change avatar.', 401)
 
     if (user.avatar) {
@@ -48,6 +51,10 @@ class UpdateUserAvatarService {
     user.avatar = filename
 
     await this.usersRepository.save(user)
+
+    await this.cacheProvider.invalidatePrefix('providers-list')
+    await this.cacheProvider.invalidatePrefix('provider-appointments')
+
     return user
   }
 }
