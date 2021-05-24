@@ -15,13 +15,12 @@ import { errors } from 'celebrate'
 import rateLimiter from './middlewares/rateLimiter'
 
 
-
 const app = express()
 
 app.use(cors())
 app.use(express.json())
-app.use(rateLimiter)
 app.use('/static', express.static(uploadConfig.uploadsFolder))
+app.use(rateLimiter)
 app.use(router)
 
 app.use(errors())
