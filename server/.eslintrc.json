@@ -19,8 +19,10 @@
     "prettier"
   ],
   "rules": {
+    "@typescript-eslint/ban-types": "warn",
+    "import/prefer-default-export": "off",
     "@typescript-eslint/no-empty-function": "off",
-    "class-methods-use-this":"off",
+    "class-methods-use-this": "off",
     "camelcase": "off",
     "@typescript-eslint/no-unused-vars": [
       "warn",
@@ -32,8 +34,12 @@
       "error",
       {
         "selector": "interface",
-        "prefix": ["I"],
-        "format": ["PascalCase"]
+        "prefix": [
+          "I"
+        ],
+        "format": [
+          "PascalCase"
+        ]
       }
     ],
     "no-useless-constructor": "off",
