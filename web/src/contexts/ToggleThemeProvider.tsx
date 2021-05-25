@@ -1,23 +1,24 @@
-import React, { createContext, Dispatch, SetStateAction } from 'react'
-import { DefaultTheme } from 'styled-components'
-import usePersistedState from '../hooks/usePersistedState'
-import dark from '../themes/dark'
+import React, { createContext, Dispatch, SetStateAction } from 'react';
+import { DefaultTheme } from 'styled-components';
+import usePersistedState from '../hooks/usePersistedState';
+import dark from '../themes/dark';
 
 export interface IToggleThemeContext<T = any> {
-  theme: T
-  setTheme: Dispatch<SetStateAction<T>>
+  theme: T;
+  setTheme: Dispatch<SetStateAction<T>>;
 }
 
-export const ToggleThemeContext = createContext<IToggleThemeContext<DefaultTheme>>({} as IToggleThemeContext)
+export const ToggleThemeContext = createContext<
+  IToggleThemeContext<DefaultTheme>
+>({} as IToggleThemeContext);
 const ToggleThemeProvider: React.FC = ({ children }): JSX.Element => {
-
-  const [theme, setTheme] = usePersistedState('@GoBarber:theme', dark)
+  const [theme, setTheme] = usePersistedState('@GoBarber:theme', dark);
 
   return (
     <ToggleThemeContext.Provider value={{ theme, setTheme }}>
       {children}
     </ToggleThemeContext.Provider>
-  )
-}
+  );
+};
 
-export default ToggleThemeProvider
+export default ToggleThemeProvider;
