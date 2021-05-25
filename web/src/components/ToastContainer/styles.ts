@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled from 'styled-components';
 
 export const Container = styled.div`
   user-select: none;
@@ -8,5 +8,4 @@ export const Container = styled.div`
   right: 0;
   padding: 30px 10px;
   overflow: hidden;
-
-`
+`;

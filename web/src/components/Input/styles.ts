@@ -1,10 +1,10 @@
-import { shade } from 'polished'
-import styled, { css } from 'styled-components'
-import Tooltip from '../Tooltip'
+import styled, { css } from 'styled-components';
+import Tooltip from '../Tooltip';
+
 interface IContainerProps {
-  isFocused: boolean
-  isFilled: boolean
-  isErrored: boolean
+  isFocused: boolean;
+  isFilled: boolean;
+  isErrored: boolean;
 }
 export const Container = styled.div<IContainerProps>`
   display: flex;
@@ -16,52 +16,57 @@ export const Container = styled.div<IContainerProps>`
   border-radius: 10px;
   padding: 0 16px;
 
-  ${props => props.isFocused && css`
-    border-color: ${props.theme.colors.orange};
-    > svg{
-      color:${props.theme.colors.orange} !important; 
-    }
-  `}
-  ${props => props.isFilled && css`
-    > svg{
-      color:${props.theme.colors.orange} !important; 
-    }
-  `}
-
-  ${props => props.isErrored && css`
-    border-color: ${props.theme.colors.error};
-    > svg {
-      color:${props.theme.colors.error} !important; 
-    }
-    > input {
-      &::placeholder{
-        color: ${props.theme.colors.error};
+  ${props =>
+    props.isFocused &&
+    css`
+      border-color: ${props.theme.colors.orange};
+      > svg {
+        color: ${props.theme.colors.orange} !important;
       }
-    }
-  `}
+    `}
+  ${props =>
+    props.isFilled &&
+    css`
+      > svg {
+        color: ${props.theme.colors.orange} !important;
+      }
+    `}
+
+  ${props =>
+    props.isErrored &&
+    css`
+      border-color: ${props.theme.colors.error};
+      > svg {
+        color: ${props.theme.colors.error} !important;
+      }
+      > input {
+        &::placeholder {
+          color: ${props.theme.colors.error};
+        }
+      }
+    `}
   & + div {
-    margin-top: 8px; 
+    margin-top: 8px;
   }
   > input {
     flex: 1;
-    
+
     padding: 17px 15px;
   }
-`
+`;
 
 export const Error = styled(Tooltip)`
-cursor: pointer;
-  color: ${props => shade(0.4, props.theme.colors.error)};
-  font-weight: bold;
-  font-size: 14px;
+  cursor: pointer;
+  color: ${props => props.theme.colors.text};
+  font-weight: 500;
+  font-size: 12px;
   font-family: 'Roboto';
 
   span {
     background-color: ${props => props.theme.colors.error};
 
     &::after {
-      background-color: ${props => props.theme.colors.error}; 
+      background-color: ${props => props.theme.colors.error};
     }
   }
-
-`
+`;

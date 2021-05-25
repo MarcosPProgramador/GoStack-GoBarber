@@ -1,9 +1,10 @@
-import styled from 'styled-components'
+import styled from 'styled-components';
+
 interface IScrollProps {
   colors: {
-    primary: string,
-    secondary: string
-  }
+    primary: string;
+    secondary: string;
+  };
 }
 export const Container = styled.div<IScrollProps>`
   &::-webkit-scrollbar {
@@ -23,5 +24,4 @@ export const Container = styled.div<IScrollProps>`
   height: 100%;
   overflow-x: hidden;
   overflow-y: auto;
-`
-
+`;

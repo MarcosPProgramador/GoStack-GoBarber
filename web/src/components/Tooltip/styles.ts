@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled from 'styled-components';
 
 export const Container = styled.div`
   position: relative;
@@ -6,11 +6,9 @@ export const Container = styled.div`
     border-radius: 4px;
     padding: 8px 10px;
 
-   
     opacity: 0;
     transition: opacity 400ms;
     visibility: hidden;
- 
 
     text-align: center;
     width: 160px;
@@ -23,7 +21,7 @@ export const Container = styled.div`
     &::after {
       content: '';
       position: absolute;
-      
+
       left: 50%;
       transform: rotateZ(45deg) translateX(-50%);
       bottom: -8px;
@@ -36,4 +34,4 @@ export const Container = styled.div`
     opacity: 1;
     visibility: visible;
   }
-`
+`;

@@ -1,4 +1,4 @@
-import { DefaultTheme } from "styled-components";
+import { DefaultTheme } from 'styled-components';
 
 export default {
   title: 'light',
@@ -12,6 +12,6 @@ export default {
     inputs: '#232129',
     text: '#EEEFF1',
     error: '#c53030',
-    success: '#1DC970'
-  }
-} as DefaultTheme
+    success: '#1DC970',
+  },
+} as DefaultTheme;

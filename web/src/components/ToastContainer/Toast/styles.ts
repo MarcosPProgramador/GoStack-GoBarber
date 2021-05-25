@@ -1,11 +1,10 @@
-import { tint, transparentize } from 'polished'
-import { animated } from 'react-spring'
-import styled, { css } from 'styled-components'
+import { tint, transparentize } from 'polished';
+import { animated } from 'react-spring';
+import styled, { css } from 'styled-components';
 
 interface IContainerProps {
-  type?: 'success' | 'info' | 'error',
+  type?: 'success' | 'info' | 'error';
 }
-
 
 const containerTypeVariations = {
   info: css`
@@ -28,39 +27,39 @@ const containerTypeVariations = {
     > button svg {
       stroke: ${props => tint(0.4, props.theme.colors.error)};
     }
-  `
-}
+  `,
+};
 
-
-export const Container = styled(animated.div) <IContainerProps>`
+export const Container = styled(animated.div)<IContainerProps>`
   position: relative;
 
   font-family: 'roboto';
   font-weight: bold;
   max-width: 400px;
   margin: 10px 0;
-  border: 2px solid transparent;  
-  background-color: ${props => transparentize(0.05, props.theme.colors.background)};
+  border: 2px solid transparent;
+  background-color: ${props =>
+    transparentize(0.05, props.theme.colors.background)};
   cursor: pointer;
   padding: 10px 60px 10px 20px;
   border-radius: 11px;
-  
-  box-shadow:  2px 2px 8px ${props => transparentize(0.6, props.theme.colors.background)};
-  
+
+  box-shadow: 2px 2px 8px
+    ${props => transparentize(0.6, props.theme.colors.background)};
+
   backdrop-filter: blur(10px);
 
   ${props => containerTypeVariations[props.type || 'info']}
 
   > p {
     font-size: 12px;
-   
   }
   > button {
     position: absolute;
     top: 10px;
     right: 20px;
   }
-`
+`;
 export const Title = styled.div`
   display: flex;
   align-items: center;
@@ -72,4 +71,4 @@ export const Title = styled.div`
     flex-shrink: 0;
     margin-right: 10px;
   }
-`
+`;
