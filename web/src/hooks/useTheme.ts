@@ -1,21 +1,25 @@
-import { useContext } from "react"
-import { DefaultTheme, ThemeContext } from "styled-components"
-import { IToggleThemeContext, ToggleThemeContext } from "../contexts/ToggleThemeProvider"
+import { useContext } from 'react';
+import { DefaultTheme, ThemeContext } from 'styled-components';
+import {
+  IToggleThemeContext,
+  ToggleThemeContext,
+} from '../contexts/ToggleThemeProvider';
 
 function useTheme(): DefaultTheme {
-  const context = useContext(ThemeContext)
+  const context = useContext(ThemeContext);
 
-  if (!context) throw new Error('useTheme must be used within a ThemeProvider')
+  if (!context) throw new Error('useTheme must be used within a ThemeProvider');
 
-  return context
+  return context;
 }
 
 function useToggleTheme(): IToggleThemeContext<DefaultTheme> {
-  const context = useContext(ToggleThemeContext)
+  const context = useContext(ToggleThemeContext);
 
-  if (!context) throw new Error('useToggleTheme must be used within a ToggleThemeProvider')
+  if (!context)
+    throw new Error('useToggleTheme must be used within a ToggleThemeProvider');
 
-  return context
+  return context;
 }
 
-export { useTheme, useToggleTheme }
+export { useTheme, useToggleTheme };
